@@ -14,6 +14,8 @@ import { createConnection } from "typeorm";
 import { Post } from "./entities/Post";
 import { User } from "./entities/User";
 import { Updoot } from "./entities/Updoot";
+import { creatorLoader } from "./utils/creatorLoader";
+import { createUpdootLoader } from "./utils/createVoteStatus";
 
 const main = async () => {
   await createConnection({
@@ -60,7 +62,7 @@ const main = async () => {
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
-    context: ({ req, res }) => ({ req, res, redis }),
+    context: ({ req, res }) => ({ req, res, redis, userLoader: creatorLoader(), updootLoader: createUpdootLoader() }),
   });
 
   apolloServer.applyMiddleware({
