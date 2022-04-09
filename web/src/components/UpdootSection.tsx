@@ -1,5 +1,4 @@
 import { Flex,  IconButton } from '@chakra-ui/core';
-import { InputValueDefinitionNode } from 'graphql';
 import React, { useState } from 'react' 
 import { PostSnippetFragment, PostsQuery, useVoteMutation, VoteMutationVariables } from '../generated/graphql';
 
@@ -9,8 +8,6 @@ interface UpdootSectionProps {
 
 export const UpdootSection: React.FC<UpdootSectionProps> = ({post}) =>{
     const [ { fetching, operation }, vote] = useVoteMutation();
-    console.log(post)
-    const [ loadingStatus, setLoadingStatus] =useState<'updoot-loading' | 'downdoot-ladong' | 'not-loading'>('not-loading')
     return (
         <Flex direction="column" justifyContent="center" alignItems={"center"} mr={4}>
          <IconButton icon="chevron-up" onClick={async() => {
