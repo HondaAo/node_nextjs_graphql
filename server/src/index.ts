@@ -16,6 +16,7 @@ import { User } from "./entities/User";
 import { Updoot } from "./entities/Updoot";
 import { creatorLoader } from "./utils/creatorLoader";
 import { createUpdootLoader } from "./utils/createVoteStatus";
+import { createSchema } from "./utils/createSchema";
 
 const main = async () => {
   await createConnection({
@@ -57,11 +58,9 @@ const main = async () => {
     })
   );
 
+  const schema = await createSchema()
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [HelloResolver, PostResolver, UserResolver],
-      validate: false,
-    }),
+    schema,
     context: ({ req, res }) => ({ req, res, redis, userLoader: creatorLoader(), updootLoader: createUpdootLoader() }),
   });
 
